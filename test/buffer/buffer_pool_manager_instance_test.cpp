@@ -2,7 +2,7 @@
 //
 //                         BusTub
 //
-// buffer_pool_manager_test.cpp
+// buffer_pool_manager_instance_test.cpp
 //
 // Identification: test/buffer/buffer_pool_manager_test.cpp
 //
@@ -10,19 +10,20 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "buffer/buffer_pool_manager.h"
+#include "buffer/buffer_pool_manager_instance.h"
 
 #include <cstdio>
 #include <random>
 #include <string>
 
+#include "buffer/buffer_pool_manager.h"
 #include "gtest/gtest.h"
 
 namespace bustub {
 
 // NOLINTNEXTLINE
 // Check whether pages containing terminal characters can be recovered
-TEST(BufferPoolManagerTest, DISABLED_BinaryDataTest) {
+TEST(BufferPoolManagerInstanceTest, BinaryDataTest) {
   const std::string db_name = "test.db";
   const size_t buffer_pool_size = 10;
   const size_t k = 5;
@@ -32,7 +33,7 @@ TEST(BufferPoolManagerTest, DISABLED_BinaryDataTest) {
   std::uniform_int_distribution<char> uniform_dist(0);
 
   auto *disk_manager = new DiskManager(db_name);
-  auto *bpm = new BufferPoolManager(buffer_pool_size, disk_manager, k);
+  auto *bpm = new BufferPoolManagerInstance(buffer_pool_size, disk_manager, k);
 
   page_id_t page_id_temp;
   auto *page0 = bpm->NewPage(&page_id_temp);
@@ -88,13 +89,13 @@ TEST(BufferPoolManagerTest, DISABLED_BinaryDataTest) {
 }
 
 // NOLINTNEXTLINE
-TEST(BufferPoolManagerTest, DISABLED_SampleTest) {
+TEST(BufferPoolManagerInstanceTest, SampleTest) {
   const std::string db_name = "test.db";
   const size_t buffer_pool_size = 10;
   const size_t k = 5;
 
   auto *disk_manager = new DiskManager(db_name);
-  auto *bpm = new BufferPoolManager(buffer_pool_size, disk_manager, k);
+  auto *bpm = new BufferPoolManagerInstance(buffer_pool_size, disk_manager, k);
 
   page_id_t page_id_temp;
   auto *page0 = bpm->NewPage(&page_id_temp);

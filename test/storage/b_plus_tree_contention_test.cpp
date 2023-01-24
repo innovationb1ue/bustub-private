@@ -9,7 +9,7 @@
 #include <iostream>
 #include <thread>  // NOLINT
 
-#include "buffer/buffer_pool_manager.h"
+#include "buffer/buffer_pool_manager_instance.h"
 #include "gtest/gtest.h"
 #include "storage/disk/disk_manager_memory.h"
 #include "storage/index/b_plus_tree.h"
@@ -25,7 +25,7 @@ bool BPlusTreeLockBenchmarkCall(size_t num_threads, int leaf_node_size, bool wit
   auto key_schema = ParseCreateStatement("a bigint");
   GenericComparator<8> comparator(key_schema.get());
   auto *disk_manager = new DiskManagerMemory(256 << 10);  // 1GB
-  auto *bpm = new BufferPoolManager(64, disk_manager);
+  BufferPoolManager *bpm = new BufferPoolManagerInstance(64, disk_manager);
   // create b+ tree
   BPlusTree<GenericKey<8>, RID, GenericComparator<8>> tree("foo_pk", bpm, comparator, leaf_node_size, 10);
   // create and fetch header_page
@@ -74,7 +74,7 @@ bool BPlusTreeLockBenchmarkCall(size_t num_threads, int leaf_node_size, bool wit
   return success;
 }
 
-TEST(BPlusTreeTest, DISABLED_BPlusTreeContentionBenchmark) {  // NOLINT
+TEST(BPlusTreeTest, BPlusTreeContentionBenchmark) {  // NOLINT
   std::vector<size_t> time_ms_with_mutex;
   std::vector<size_t> time_ms_wo_mutex;
   for (size_t iter = 0; iter < 20; iter++) {
@@ -114,7 +114,7 @@ TEST(BPlusTreeTest, DISABLED_BPlusTreeContentionBenchmark) {  // NOLINT
             << std::endl;
 }
 
-TEST(BPlusTreeTest, DISABLED_BPlusTreeContentionBenchmark2) {  // NOLINT
+TEST(BPlusTreeTest, BPlusTreeContentionBenchmark2) {  // NOLINT
   std::vector<size_t> time_ms_with_mutex;
   std::vector<size_t> time_ms_wo_mutex;
   for (size_t iter = 0; iter < 20; iter++) {
