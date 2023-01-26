@@ -17,9 +17,12 @@
 
 namespace bustub {
 
-BufferPoolManagerInstance::BufferPoolManagerInstance(size_t pool_size, DiskManager *disk_manager, size_t replacer_k,
+BufferPoolManagerInstance::BufferPoolManagerInstance(size_t pool_size,
+                                                     DiskManager *disk_manager,
+                                                     size_t replacer_k,
                                                      LogManager *log_manager)
-    : pool_size_(pool_size), disk_manager_(disk_manager), log_manager_(log_manager) {
+    : pool_size_(pool_size), disk_manager_(disk_manager),
+      log_manager_(log_manager) {
   // we allocate a consecutive memory space for the buffer pool
   pages_ = new Page[pool_size_];
   page_table_ = new ExtendibleHashTable<page_id_t, frame_id_t>(bucket_size_);
@@ -138,7 +141,8 @@ auto BufferPoolManagerInstance::FetchPgImp(page_id_t page_id) -> Page * {
   return &pages_[frame_id];
 }
 
-auto BufferPoolManagerInstance::UnpinPgImp(page_id_t page_id, bool is_dirty) -> bool {
+auto BufferPoolManagerInstance::UnpinPgImp(page_id_t page_id, bool is_dirty)
+    -> bool {
   std::scoped_lock<std::mutex> lock(latch_);
 
   frame_id_t frame_id;
@@ -211,6 +215,8 @@ auto BufferPoolManagerInstance::DeletePgImp(page_id_t page_id) -> bool {
   return true;
 }
 
-auto BufferPoolManagerInstance::AllocatePage() -> page_id_t { return next_page_id_++; }
+auto BufferPoolManagerInstance::AllocatePage() -> page_id_t {
+  return next_page_id_++;
+}
 
-}  // namespace bustub
+} // namespace bustub

@@ -65,7 +65,7 @@ give_up() {
   echo "https://github.com/cmu-db/bustub/issues"
   echo
   exit 1
-}
+} 
 
 install_mac() {
   # Install Homebrew.

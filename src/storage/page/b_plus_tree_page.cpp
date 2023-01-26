@@ -17,9 +17,15 @@ namespace bustub {
  * Helper methods to get/set page type
  * Page type enum class is defined in b_plus_tree_page.h
  */
-auto BPlusTreePage::IsLeafPage() const -> bool { return page_type_ == IndexPageType::LEAF_PAGE; }
-auto BPlusTreePage::IsRootPage() const -> bool { return parent_page_id_ == INVALID_PAGE_ID; }
-void BPlusTreePage::SetPageType(IndexPageType page_type) { page_type_ = page_type; }
+auto BPlusTreePage::IsLeafPage() const -> bool {
+  return page_type_ == IndexPageType::LEAF_PAGE;
+}
+auto BPlusTreePage::IsRootPage() const -> bool {
+  return parent_page_id_ == INVALID_PAGE_ID;
+}
+void BPlusTreePage::SetPageType(IndexPageType page_type) {
+  page_type_ = page_type;
+}
 auto BPlusTreePage::GetPageType() -> IndexPageType { return page_type_; }
 
 /*
@@ -50,8 +56,12 @@ auto BPlusTreePage::GetMinSize() const -> int {
 /*
  * Helper methods to get/set parent page id
  */
-auto BPlusTreePage::GetParentPageId() const -> page_id_t { return parent_page_id_; }
-void BPlusTreePage::SetParentPageId(page_id_t parent_page_id) { parent_page_id_ = parent_page_id; }
+auto BPlusTreePage::GetParentPageId() const -> page_id_t {
+  return parent_page_id_;
+}
+void BPlusTreePage::SetParentPageId(page_id_t parent_page_id) {
+  parent_page_id_ = parent_page_id;
+}
 
 /*
  * Helper methods to get/set self page id
@@ -64,4 +74,4 @@ void BPlusTreePage::SetPageId(page_id_t page_id) { page_id_ = page_id; }
  */
 void BPlusTreePage::SetLSN(lsn_t lsn) { lsn_ = lsn; }
 
-}  // namespace bustub
+} // namespace bustub

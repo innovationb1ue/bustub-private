@@ -26,15 +26,19 @@ INDEXITERATOR_TYPE::~IndexIterator() {
 
 INDEX_TEMPLATE_ARGUMENTS
 auto INDEXITERATOR_TYPE::IsEnd() -> bool {
-  return leaf_->GetNextPageId() == INVALID_PAGE_ID && index_ == leaf_->GetSize();
+  return leaf_->GetNextPageId() == INVALID_PAGE_ID &&
+         index_ == leaf_->GetSize();
 }
 
 INDEX_TEMPLATE_ARGUMENTS
-auto INDEXITERATOR_TYPE::operator*() -> const MappingType & { return leaf_->GetItem(index_); }
+auto INDEXITERATOR_TYPE::operator*() -> const MappingType & {
+  return leaf_->GetItem(index_);
+}
 
 INDEX_TEMPLATE_ARGUMENTS
 auto INDEXITERATOR_TYPE::operator++() -> INDEXITERATOR_TYPE & {
-  if (index_ == leaf_->GetSize() - 1 && leaf_->GetNextPageId() != INVALID_PAGE_ID) {
+  if (index_ == leaf_->GetSize() - 1 &&
+      leaf_->GetNextPageId() != INVALID_PAGE_ID) {
     auto next_page = buffer_pool_manager_->FetchPage(leaf_->GetNextPageId());
 
     next_page->RLatch();
@@ -57,7 +61,9 @@ auto INDEXITERATOR_TYPE::operator==(const IndexIterator &itr) const -> bool {
 }
 
 INDEX_TEMPLATE_ARGUMENTS
-auto INDEXITERATOR_TYPE::operator!=(const IndexIterator &itr) const -> bool { return !this->operator==(itr); }
+auto INDEXITERATOR_TYPE::operator!=(const IndexIterator &itr) const -> bool {
+  return !this->operator==(itr);
+}
 
 template class IndexIterator<GenericKey<4>, RID, GenericComparator<4>>;
 
@@ -69,4 +75,4 @@ template class IndexIterator<GenericKey<32>, RID, GenericComparator<32>>;
 
 template class IndexIterator<GenericKey<64>, RID, GenericComparator<64>>;
 
-}  // namespace bustub
+} // namespace bustub
